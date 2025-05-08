@@ -47,7 +47,7 @@ const login = async () => {
   }
 
   const userData = {
-    email: email.value,
+    username: email.value,
     password: password.value
   };
 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Logger from './util/logger.js';
+import Logger from '../public/util/logger.js';
 
 // 后端 API 的基础 URL
 const baseURL = '/api';

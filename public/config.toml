@@ -12,7 +12,3 @@ link1 = "exmple.com"
 link2 = "exmple.com"
 link3 = "exmple.com"
 link4 = "exmple.com"
-
-[server]
-port = 80
-ssl = false

@@ -1,9 +1,9 @@
-const fs = require('fs');
-const toml = require('@iarna/toml');
-const logger = require('./logger.js');
+import fs from 'fs';
+import toml from '@iarna/toml';
+import logger from './logger.js';
 
-// 读取配置文件的函数
-const readConfigFile = () => {
+// 读取配置文件
+export const readConfigFile = () => {
     try {
         logger.info('开始读取配置文件');
         const data = fs.readFileSync('./config.toml', 'utf8');

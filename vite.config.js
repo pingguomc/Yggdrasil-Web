@@ -15,6 +15,7 @@ export default defineConfig({
       config: 'tailwind.config.js', // Tailwind CSS 配置文件路径
     }),
   ],
+  base: './',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
