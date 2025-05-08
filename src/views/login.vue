@@ -27,7 +27,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { performLogin } from '../api.js';
+import { loginAPI } from '../api.js'; // 确保导入的是新的 login 函数
 import InputComponent from '../components/Input.vue';
 import ButtonComponent from '../components/Button.vue';
 
@@ -35,22 +35,38 @@ const email = ref('');
 const password = ref('');
 const errorMessage = ref('');
 const successMessage = ref('');
+const isLoading = ref(false);
 
 const login = async () => {
+  errorMessage.value = '';
+  successMessage.value = '';
+
+  if (!email.value || !password.value) {
+    errorMessage.value = '请输入邮箱和密码';
+    return;
+  }
+
   const userData = {
     email: email.value,
     password: password.value
   };
 
-  const result = await performLogin(userData);
+  isLoading.value = true;
 
-  if (result.success) {
-    successMessage.value = '登录成功';
-    errorMessage.value = '';
-  } else {
-    errorMessage.value = result.errorMessage;
-    successMessage.value = '';
+  try {
+    const response = await loginAPI(userData);
+    isLoading.value = false;
+    console.log('登录成功:', response);
+    // 这里可以添加跳转到主页的逻辑
+    errorMessage.value = '登录成功！';
+    // 存储 Token
+    localStorage.setItem('token', response.data.token);
+  } catch (error) {
+    isLoading.value = false;
+    errorMessage.value = error.message || '登录失败，请重试';
+    console.error('登录失败:', error);
   }
+
 };
 </script>
 

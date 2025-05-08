@@ -1,10 +1,10 @@
 <script>
 
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 
 export default defineComponent({
-  components: {DefaultLayout}
+  components: { DefaultLayout }
 })
 </script>
 
