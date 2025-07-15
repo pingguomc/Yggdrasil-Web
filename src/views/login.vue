@@ -16,12 +16,11 @@
       />
       <ButtonComponent
           type="submit"
-          label="登录账户"
+          label="登录"
           @click="login"
       />
     </form>
     <p v-if="errorMessage" class="text-red-500 font-bold mt-8 text-xl"> {{ errorMessage }} </p>
-    <div v-if="successMessage" class="text-red-500 font-bold mt-8 text-xl">{{ successMessage }}</div>
   </div>
 </template>
 
@@ -30,46 +29,34 @@ import { ref } from 'vue';
 import { loginAPI } from '../api.js'; // 确保导入的是新的 login 函数
 import InputComponent from '../components/Input.vue';
 import ButtonComponent from '../components/Button.vue';
+import router from "@/router/index.js";
+import logger from "../../public/util/logger.js";
 
 const email = ref('');
 const password = ref('');
 const errorMessage = ref('');
-const successMessage = ref('');
-const isLoading = ref(false);
 
 const login = async () => {
   errorMessage.value = '';
-  successMessage.value = '';
 
   if (!email.value || !password.value) {
     errorMessage.value = '请输入邮箱和密码';
     return;
   }
 
-  const userData = {
-    username: email.value,
-    password: password.value
-  };
-
-  isLoading.value = true;
-
   try {
-    const response = await loginAPI(userData);
-    isLoading.value = false;
-    console.log('登录成功:', response);
-    // 这里可以添加跳转到主页的逻辑
+    let response = await loginAPI(email.value, password.value);
+    logger.info('用户登录成功:', response);
     errorMessage.value = '登录成功！';
-    // 存储 Token
-    localStorage.setItem('token', response.data.token);
+    // 这里可以添加跳转到主页的逻辑
+    await router.push('/login');
   } catch (error) {
-    isLoading.value = false;
     errorMessage.value = error.message || '登录失败，请重试';
-    console.error('登录失败:', error);
+    logger.error('用户登录失败:', error);
   }
-
 };
-</script>
 
+</script>
 
 <style scoped>
 

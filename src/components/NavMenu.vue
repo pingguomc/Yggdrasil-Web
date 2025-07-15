@@ -31,27 +31,13 @@
           重置密码
         </router-link>
       </li>
-      <!-- 退出登录 -->
-      <li>
-        <button
-            @click="handleLogout"
-            class="w-full px-4 py-2 text-gray-700 rounded hover:bg-red-100 hover:text-red-600 focus:outline-none"
-        >
-          退出登录
-        </button>
-      </li>
     </ul>
   </div>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router';
-import { logout } from '../api.js'; // 引入之前定义的退出登录函数
 
 const router = useRouter();
 
-const handleLogout = () => {
-  logout(); // 清除Token并跳转登录页
-  router.push('/login');
-};
 </script>
