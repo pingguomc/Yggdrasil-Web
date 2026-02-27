@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]  
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: '手动触发原因（选填）'
+        required: false
+        default: 'manual run'
+
+jobs:
+  build:
+    name: Build-Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@4
+      - name: Set Node
+        uses: actions/setup-node@4
+        with:
+          node-version: 20
+      - name: Install
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Oxlint-Review
+        run: npx oxlint@latest src/  
+      - name: Upload
+        uses: actions/upload-artifact@4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
